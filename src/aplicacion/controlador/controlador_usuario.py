@@ -1,7 +1,8 @@
-# src/application/controllers/user_controller.py
 from flask import jsonify, request
 from aplicacion.servicio.servicio_usuario import UserService
 from dominio.entidades.usuario import User
+from bson import ObjectId
+from bson.errors import InvalidId
 
 class UserController:
     def __init__(self, user_service: UserService):
@@ -11,9 +12,8 @@ class UserController:
         try:
             data = request.get_json()
             
-            # Validación básica
-            if not data or 'name' not in data or 'email' not in data:
-                return jsonify({'error': 'Name and email are required'}), 400
+            if not data or 'nombre' not in data or 'email' not in data:
+                return jsonify({'error': 'nombre y email son necesarios'}), 400
             
             user = self.user_service.create_user(data)
             return jsonify(user.to_dict()), 201
@@ -21,7 +21,7 @@ class UserController:
         except Exception as e:
             return jsonify({'error': str(e)}), 500
     
-    def get_user(self, user_id: int):
+    def get_user(self, user_id: str):
         try:
             user = self.user_service.get_user(user_id)
             
@@ -30,6 +30,8 @@ class UserController:
             
             return jsonify(user.to_dict()), 200
         
+        except InvalidId:
+            return jsonify({'error': 'Invalid user ID format'}), 400
         except Exception as e:
             return jsonify({'error': str(e)}), 500
     

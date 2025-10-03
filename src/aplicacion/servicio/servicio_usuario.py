@@ -10,7 +10,7 @@ class UserService:
         user = User.from_dict(user_data)
         return self.user_repository.save(user)
     
-    def get_user(self, user_id: int) -> Optional[User]:
+    def get_user(self, user_id: str) -> Optional[User]:
         return self.user_repository.find_by_id(user_id)
     
     def get_all_users(self) -> List[User]:

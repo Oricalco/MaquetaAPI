@@ -1,4 +1,3 @@
-# src/domain/repositories/user_repository.py
 from abc import ABC, abstractmethod
 from typing import List, Optional
 from dominio.entidades.usuario import User

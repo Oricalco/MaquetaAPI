@@ -5,7 +5,8 @@ from bson import ObjectId
 import pymongo
 
 class MongoDBUserRepository(UserRepository):
-    def __init__(self, database, collection_name="users"):
+    # Cambiar "collection_name para cambiar de coleccion"
+    def __init__(self, database, collection_name="usuarios"):
         self.collection = database[collection_name]
     
     def save(self, user: User) -> User:
